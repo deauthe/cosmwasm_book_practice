@@ -20,6 +20,9 @@ pub enum QueryMsg {
 }
 // QueryResponses trait for our query message to correlate
 //  the message variants with responses we would generate for them
+//this just means that Greet (Unit like variant of an enum) will return A Greet Response when supplied in a query,
+//the return macro tells so and it is there to build a good documentation and know the expected type to later generate a schema 
+//out of the expected types 
 
 
 #[cw_serde]
