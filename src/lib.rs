@@ -4,12 +4,12 @@ use cosmwasm_std::{
 use error::ContractError;
 use msg::InstantiateMsg;
 
-mod contract;
-mod error;
-mod msg;
-mod state;
+pub mod contract;
+pub mod error;
+pub mod msg;
+pub mod state;
 
-#[entry_point]
+#[cfg_attr(not(feature = "library"), entry_point)]
 pub fn instantiate(
     deps: DepsMut,
     env: Env,
@@ -19,12 +19,12 @@ pub fn instantiate(
     contract::instantiate(deps, env, info, msg)
 }
 
-#[entry_point]
+#[cfg_attr(not(feature = "library"), entry_point)]
 pub fn query(deps: Deps, env: Env, msg: msg::QueryMsg) -> StdResult<Binary> {
     contract::query(deps, env, msg)
 }
 
-#[entry_point]
+#[cfg_attr(not(feature = "library"), entry_point)]
 pub fn execute(
     deps: DepsMut,
     env: Env,
@@ -33,3 +33,7 @@ pub fn execute(
 ) -> Result<Response, ContractError> {
     contract::execute(deps, env, info, msg)
 }
+
+//The cfg_attr attribute is a conditional compilation attribute, similar to the cfg we used before for the test.
+//  It expands to the given attribute if the condition expands to true. In our case - 
+// it would expand to nothing if the feature "library" is enabled, or it would expand just to #[entry_point] in another case.

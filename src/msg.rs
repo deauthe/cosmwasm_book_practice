@@ -1,28 +1,44 @@
+use cosmwasm_schema::{cw_serde,QueryResponses};
 use cosmwasm_std::Addr;
-use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
+
+//the #[cw_serde] macro does the following:
+// use schemars::JsonSchema;
+// use serde::{Deserialize, Serialize};
+// #[derive(Serialize,Deserialize,PartialEq,Debug,Clone,JsonSchema)]
+
+
+
+
+#[cw_serde]
+#[derive(QueryResponses)]
+pub enum QueryMsg {
+    #[returns(GreetResp)]
+    Greet {},
+    #[returns(AdminsListResp)]
+    AdminsList {},
+}
+// QueryResponses trait for our query message to correlate
+//  the message variants with responses we would generate for them
+
+
+#[cw_serde]
 pub struct GreetResp {
     pub message: String,
 }
-#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
-pub enum QueryMsg {
-    Greet {},
-    AdminsList {},
-}
 
-#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
+#[cw_serde]
 pub struct InstantiateMsg {
     pub admins: Vec<String>,
     pub donation_denom: String,
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
+#[cw_serde]
 pub struct AdminsListResp {
     pub admins: Vec<Addr>,
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Debug, Clone)]
+#[cw_serde]
 pub enum ExecuteMsg {
     AddMembers { admins: Vec<String> },
     Leave {},

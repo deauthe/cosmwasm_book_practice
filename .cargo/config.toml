@@ -1,3 +1,6 @@
 [alias]
-wasm = "build --target wasm32-unknown-unknown --release"
+wasm = "build --target wasm32-unknown-unknown --release --lib"
 wasm-debug = "build --target wasm32-unknown-unknown"
+schema = "run schema"
+
+# The --lib flag added to wasm cargo aliases tells the toolchain to build only the library target - it would skip building any binaries.
